@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screen to Green - Documentation</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 2rem; max-width: 800px; margin: auto; }
+        h1 { color: #2e7d32; }
+        ul { list-style: none; padding: 0; }
+        li { margin: 10px 0; }
+        a { text-decoration: none; color: #1565c0; font-weight: bold; }
+        a:hover { text-decoration: underline; }
+        .error-msg { color: #d32f2f; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+
+    <h1>Screen to Green Project</h1>
+    <p>Select a document to view:</p>
+
+    <nav>
+        <ul>
+            <li><a href="brochure.html" class="doc-link">View Project Brochure</a></li>
+            <li><a href="graphs.html" class="doc-link">View Data Graphs</a></li>
+        </ul>
+    </nav>
+
+    <div id="error-display" class="error-msg"></div>
+
+    <script>
+        (function validateLinks() {
+            const links = document.querySelectorAll('.doc-link');
+            
+            links.forEach(link => {
+                // Fail fast: Check if the href attribute is actually set
+                if (!link.getAttribute('href')) {
+                    throw new Error(`Critical Configuration Error: Missing href for link "${link.textContent}"`);
+                }
+
+                // Optional: Verify file existence via HEAD request
+                fetch(link.href, { method: 'HEAD' })
+                    .then(response => {
+                        if (!response.ok) {
+                            const errorMsg = `Error: Cannot find ${link.getAttribute('href')} (Status: ${response.status})`;
+                            document.getElementById('error-display').textContent = errorMsg;
+                            document.getElementById('error-display').style.display = 'block';
+                            throw new Error(errorMsg);
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Navigation check failed:", err.message);
+                    });
+            });
+        })();
+    </script>
+</body>
+</html>
