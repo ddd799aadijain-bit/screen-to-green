@@ -1,0 +1,1869 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen to Green – IIT Delhi</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=IBM+Plex+Mono:wght@400;600&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest:   #1E3A1A;
+    --canopy:   #2F6B24;
+    --leaf:     #4A9E3A;
+    --mint:     #B8E6A4;
+    --ochre:    #C8903A;
+    --gold:     #E8B84B;
+    --terra:    #C4532A;
+    --sand:     #F2E8D0;
+    --parch:    #FBF5E6;
+    --ink:      #1A1208;
+    --ash:      #4A4438;
+    --screen:   #0A0F1A;
+    --glow:     #00FF88;
+    --glitch:   #FF2E63;
+    --mono:     'IBM Plex Mono', monospace;
+    --serif:    'Lora', serif;
+    --display:  'Abril Fatface', cursive;
+    --sans:     'DM Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--parch);
+    color: var(--ink);
+    font-family: var(--serif);
+    overflow-x: hidden;
+  }
+
+  /* ── COVER ────────────────────────────────────────── */
+  #cover {
+    min-height: 100vh;
+    background: var(--screen);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 4rem clamp(2rem, 6vw, 6rem);
+    gap: 3rem;
+  }
+
+  @media (max-width: 800px) {
+    #cover {
+      grid-template-columns: 1fr;
+      justify-items: center;
+      padding: 5rem 2rem 4rem;
+      gap: 2.5rem;
+    }
+    .cover-left { order: 2; text-align: center; }
+    .cover-phone-wrap { order: 1; }
+  }
+
+  #cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,255,136,.018) 3px, rgba(0,255,136,.018) 4px),
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(0,60,30,.5) 0%, transparent 70%);
+    pointer-events: none;
+    animation: scanline 10s linear infinite;
+  }
+
+  #cover::after {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(0,255,136,.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  @keyframes scanline {
+    0%   { background-position: 0 0, center; }
+    100% { background-position: 0 300px, center; }
+  }
+
+  /* LEFT SIDE — text content */
+  .cover-left {
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-eyebrow {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .3em;
+    color: var(--glow);
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+  }
+
+  .cover-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 28px; height: 1px;
+    background: var(--glow);
+  }
+
+  .cover-h1 {
+    font-family: var(--display);
+    font-size: clamp(3.5rem, 7vw, 6rem);
+    line-height: .95;
+    margin-bottom: 1.5rem;
+  }
+
+  .cover-h1 .line-screen {
+    display: block;
+    background: linear-gradient(90deg, #fff, #9CA3AF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-h1 .line-arrow {
+    display: block;
+    color: var(--glow);
+    -webkit-text-fill-color: var(--glow);
+    font-size: .7em;
+    margin: .1em 0;
+    opacity: .5;
+  }
+
+  .cover-h1 .line-green {
+    display: block;
+    background: linear-gradient(90deg, var(--glow), #69E060);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-tagline {
+    font-family: var(--serif);
+    font-size: clamp(.95rem, 1.8vw, 1.1rem);
+    color: rgba(156, 163, 175, .9);
+    line-height: 1.7;
+    max-width: 38ch;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .cover-cta-strip {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .cover-open-btn {
+    font-family: var(--mono);
+    font-size: .7rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    color: var(--screen);
+    background: var(--glow);
+    border: none;
+    border-radius: 6px;
+    padding: .75rem 1.5rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: opacity .2s, transform .2s;
+  }
+
+  .cover-open-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+  .cover-open-note {
+    font-family: var(--mono);
+    font-size: .62rem;
+    color: #374151;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* RIGHT SIDE — phone */
+  .cover-phone-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cover-phone {
+    width: min(300px, 85vw);
+    background: linear-gradient(160deg, #1C2333 0%, #111827 100%);
+    border-radius: 44px;
+    border: 1.5px solid #2D3748;
+    padding: 3rem 1.75rem 2rem;
+    box-shadow:
+      0 0 0 6px #0D1117,
+      0 0 60px rgba(0,255,136,.12),
+      0 50px 100px rgba(0,0,0,.8);
+    position: relative;
+    text-align: center;
+  }
+
+  .phone-notch {
+    width: 90px; height: 26px;
+    background: #0D1117;
+    border-radius: 0 0 16px 16px;
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .phone-notch::after {
+    content: '';
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #1A202C;
+    border: 1.5px solid #2D3748;
+  }
+
+  .phone-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .75rem;
+  }
+
+  .phone-status span {
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: #6B7280;
+    letter-spacing: .05em;
+  }
+
+  .phone-time {
+    font-family: var(--mono);
+    font-size: 3.2rem;
+    color: #fff;
+    letter-spacing: .02em;
+    line-height: 1;
+    margin-bottom: .2rem;
+    font-weight: 600;
+  }
+
+  .phone-date {
+    font-family: var(--mono);
+    font-size: .65rem;
+    color: #6B7280;
+    margin-bottom: 1.5rem;
+    letter-spacing: .08em;
+  }
+
+  .screen-time-banner {
+    background: rgba(255,46,99,.12);
+    border: 1px solid rgba(255,46,99,.3);
+    border-radius: 14px;
+    padding: .85rem 1rem;
+    margin-bottom: .75rem;
+    text-align: left;
+  }
+
+  .stb-top {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .35rem;
+  }
+
+  .screen-time-banner .stb-label {
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: var(--glitch);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+  }
+
+  .screen-time-banner .stb-val {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    color: #fff;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .stb-sub {
+    font-family: var(--mono);
+    font-size: .58rem;
+    color: #EF4444;
+    letter-spacing: .04em;
+    line-height: 1.4;
+  }
+
+  .phone-notification {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 14px;
+    padding: .75rem 1rem;
+    text-align: left;
+    margin-bottom: .75rem;
+  }
+
+  .pn-app {
+    font-family: var(--mono);
+    font-size: .55rem;
+    color: #6B7280;
+    letter-spacing: .1em;
+    margin-bottom: .2rem;
+    text-transform: uppercase;
+  }
+
+  .pn-text {
+    font-family: var(--sans);
+    font-size: .75rem;
+    color: #D1D5DB;
+    line-height: 1.4;
+  }
+
+  .phone-unlock {
+    margin-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: .58rem;
+    color: #374151;
+    letter-spacing: .1em;
+  }
+
+  .phone-swipe-bar {
+    width: 40px; height: 4px;
+    background: #374151;
+    border-radius: 2px;
+    margin: .75rem auto 0;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%; transform: translateX(-50%);
+    font-family: var(--mono);
+    font-size: .58rem;
+    color: #2D3748;
+    letter-spacing: .25em;
+    white-space: nowrap;
+    animation: bob 2.5s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50%       { transform: translateX(-50%) translateY(6px); }
+  }
+
+  /* ── SHARED PANEL STYLES ─────────────────────────── */
+  .panel {
+    padding: clamp(3rem, 8vw, 6rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .panel-label {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: .6;
+  }
+
+  .panel-heading {
+    font-family: var(--display);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .panel-body {
+    font-size: 1rem;
+    line-height: 1.8;
+    max-width: 65ch;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .two-col { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  /* ── PANEL 1: DIAGNOSIS ───────────────────────────── */
+  #diagnosis {
+    background: var(--sand);
+  }
+
+  #diagnosis .panel-label { color: var(--terra); }
+  #diagnosis .panel-heading { color: var(--forest); }
+
+  .flowchart {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin: 2.5rem 0;
+    position: relative;
+  }
+
+  .fc-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .fc-box {
+    background: #fff;
+    border: 2px solid var(--ochre);
+    border-radius: 10px;
+    padding: .6rem 1.2rem;
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--ink);
+    white-space: nowrap;
+    flex-shrink: 0;
+    box-shadow: 3px 3px 0 var(--ochre);
+    transition: transform .2s;
+  }
+
+  .fc-box:hover { transform: translate(-2px, -2px); }
+
+  .fc-box.bad {
+    background: #FFF5F5;
+    border-color: var(--glitch);
+    box-shadow: 3px 3px 0 var(--glitch);
+    color: var(--terra);
+  }
+
+  .fc-arrow {
+    font-size: 1.2rem;
+    color: var(--ochre);
+    flex-shrink: 0;
+  }
+
+  .fc-connector {
+    width: 2px;
+    height: 20px;
+    background: var(--ochre);
+    margin-left: 30px;
+  }
+
+  .glitch-box {
+    background: #FFF0F0;
+    border: 2px dashed var(--glitch);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0;
+    position: relative;
+    max-width: 540px;
+  }
+
+  .glitch-box::before {
+    content: '⚠  IDENTIFIED GLITCH';
+    position: absolute;
+    top: -12px; left: 12px;
+    background: var(--sand);
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: var(--glitch);
+    letter-spacing: .15em;
+    padding: 0 6px;
+  }
+
+  .glitch-box p {
+    font-family: var(--mono);
+    font-size: .82rem;
+    line-height: 1.6;
+    color: var(--ash);
+  }
+
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+
+  .stat-card {
+    background: var(--forest);
+    color: var(--sand);
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  .stat-card .num {
+    font-family: var(--display);
+    font-size: 2.5rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-card .desc {
+    font-family: var(--mono);
+    font-size: .65rem;
+    margin-top: .4rem;
+    opacity: .8;
+    line-height: 1.5;
+    letter-spacing: .05em;
+  }
+
+  /* ── PANEL 2: SCIENCE ─────────────────────────────── */
+  #science {
+    background: var(--forest);
+    color: var(--sand);
+  }
+
+  #science .panel-label { color: var(--gold); }
+  #science .panel-heading { color: var(--mint); }
+
+  .theory-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .theory-cards { grid-template-columns: 1fr; }
+  }
+
+  .theory-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: background .3s;
+  }
+
+  .theory-card:hover { background: rgba(255,255,255,.1); }
+
+  .theory-card .tc-tag {
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: var(--gold);
+    letter-spacing: .2em;
+    margin-bottom: .6rem;
+    display: block;
+  }
+
+  .theory-card h3 {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: .6rem;
+  }
+
+  .theory-card p {
+    font-size: .85rem;
+    line-height: 1.7;
+    color: rgba(251,245,230,.75);
+  }
+
+  .bde-block {
+    margin: 2.5rem 0;
+    background: rgba(0,255,136,.05);
+    border: 1px solid rgba(0,255,136,.2);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+  }
+
+  .bde-block::before {
+    content: 'BDE OPERATIONAL SCORECARD';
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: var(--glow);
+    letter-spacing: .2em;
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+
+  .bde-formula {
+    font-family: var(--mono);
+    font-size: clamp(.85rem, 2.5vw, 1.1rem);
+    color: #fff;
+    line-height: 2;
+    padding: 1rem;
+    background: rgba(0,0,0,.3);
+    border-radius: 10px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .bde-formula .highlight-green { color: var(--glow); font-weight: 600; }
+  .bde-formula .highlight-gold  { color: var(--gold); font-weight: 600; }
+  .bde-formula .highlight-red   { color: var(--glitch); font-weight: 600; }
+
+  .bde-terms {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 700px) {
+    .bde-terms { grid-template-columns: 1fr; }
+  }
+
+  .bde-term {
+    background: rgba(0,0,0,.25);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,.07);
+  }
+
+  .bdt-header {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .65rem 1rem;
+    background: rgba(255,255,255,.06);
+    border-bottom: 1px solid rgba(255,255,255,.07);
+    flex-wrap: wrap;
+  }
+
+  .bdt-num {
+    font-family: var(--mono);
+    font-size: .75rem;
+    color: rgba(251,245,230,.35);
+    flex-shrink: 0;
+  }
+
+  .bdt-name {
+    font-family: var(--mono);
+    font-size: .65rem;
+    color: rgba(251,245,230,.65);
+    letter-spacing: .06em;
+    flex: 1;
+  }
+
+  .bdt-expr {
+    font-family: var(--mono);
+    font-size: .78rem;
+    font-weight: 600;
+    margin-left: auto;
+  }
+
+  .bdt-body {
+    padding: .9rem 1rem;
+  }
+
+  .bdt-vars {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: .65rem;
+  }
+
+  .bdt-var {
+    display: flex;
+    gap: .6rem;
+    align-items: flex-start;
+    font-size: .74rem;
+    color: rgba(251,245,230,.7);
+    line-height: 1.5;
+  }
+
+  .bdt-sym {
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    min-width: 3rem;
+    margin-top: .05rem;
+  }
+
+  .bdt-rationale {
+    font-family: var(--mono);
+    font-size: .63rem;
+    color: rgba(251,245,230,.4);
+    line-height: 1.5;
+    border-top: 1px solid rgba(255,255,255,.06);
+    padding-top: .6rem;
+    font-style: italic;
+  }
+
+  .science-copy {
+    background: rgba(255,255,255,.05);
+    border-left: 3px solid var(--gold);
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    font-size: .95rem;
+    line-height: 1.8;
+    color: rgba(251,245,230,.85);
+    max-width: 70ch;
+  }
+
+  /* ── PANEL 3: DECOY EFFECT ────────────────────────── */
+  #decoy {
+    background: var(--parch);
+    position: relative;
+  }
+
+  #decoy::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--terra), var(--ochre), var(--canopy));
+  }
+
+  #decoy .panel-label { color: var(--canopy); }
+  #decoy .panel-heading { color: var(--ink); }
+
+  .option-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+
+  @media (max-width: 750px) {
+    .option-cards { grid-template-columns: 1fr; }
+  }
+
+  .opt-card {
+    border-radius: 18px;
+    padding: 1.75rem 1.5rem;
+    position: relative;
+    transition: transform .25s, box-shadow .25s;
+  }
+
+  .opt-card:hover { transform: translateY(-4px); }
+
+  .opt-card .opt-tag {
+    font-family: var(--mono);
+    font-size: .6rem;
+    letter-spacing: .2em;
+    margin-bottom: .75rem;
+    display: block;
+    text-transform: uppercase;
+  }
+
+  .opt-card h3 {
+    font-family: var(--display);
+    font-size: 1.35rem;
+    margin-bottom: .75rem;
+    line-height: 1.2;
+  }
+
+  .opt-card p {
+    font-size: .85rem;
+    line-height: 1.7;
+  }
+
+  .opt-card.decoy {
+    background: #FFF5F5;
+    border: 2px solid #FECACA;
+    box-shadow: 4px 4px 0 #FCA5A5;
+    color: var(--ash);
+  }
+
+  .opt-card.decoy .opt-tag { color: var(--glitch); }
+  .opt-card.decoy h3 { color: var(--terra); }
+
+  .opt-card.default {
+    background: #FFFBEB;
+    border: 2px solid #FDE68A;
+    box-shadow: 4px 4px 0 #F59E0B;
+    color: var(--ash);
+  }
+
+  .opt-card.default .opt-tag { color: var(--ochre); }
+  .opt-card.default h3 { color: #92400E; }
+
+  .opt-card.solution {
+    background: var(--forest);
+    border: 2px solid var(--canopy);
+    box-shadow: 4px 4px 0 var(--glow);
+    color: var(--sand);
+  }
+
+  .opt-card.solution .opt-tag { color: var(--glow); }
+  .opt-card.solution h3 { color: var(--mint); }
+
+  .recommended-badge {
+    position: absolute;
+    top: -12px; right: 16px;
+    background: var(--glow);
+    color: var(--forest);
+    font-family: var(--mono);
+    font-size: .58rem;
+    font-weight: 700;
+    letter-spacing: .1em;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* ── PANEL 4: MAP / DESTINATIONS ─────────────────── */
+  #destinations {
+    background: var(--canopy);
+    color: var(--sand);
+  }
+
+  #destinations .panel-label { color: var(--mint); }
+  #destinations .panel-heading { color: #fff; }
+
+  .dest-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .dest-grid { grid-template-columns: 1fr; }
+  }
+
+  .dest-card {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 18px;
+    padding: 1.75rem 1.5rem;
+    transition: background .3s, transform .2s;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .dest-card:hover {
+    background: rgba(255,255,255,.14);
+    transform: translateY(-3px);
+  }
+
+  .dest-level {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: var(--gold);
+    letter-spacing: .15em;
+    margin-bottom: 1rem;
+    background: rgba(232,184,75,.15);
+    border: 1px solid rgba(232,184,75,.3);
+    border-radius: 20px;
+    padding: .3rem .75rem;
+  }
+
+  .level-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: .5; transform: scale(1.4); }
+  }
+
+  .dest-card h3 {
+    font-family: var(--display);
+    font-size: 1.3rem;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: .75rem;
+  }
+
+  .dest-card .dest-tagline {
+    font-family: var(--mono);
+    font-size: .65rem;
+    color: var(--mint);
+    letter-spacing: .1em;
+    margin-bottom: .75rem;
+    display: block;
+  }
+
+  .dest-card p {
+    font-size: .84rem;
+    line-height: 1.7;
+    color: rgba(251,245,230,.8);
+  }
+
+  .dest-card .dest-highlights {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  .dest-hl {
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+    font-family: var(--mono);
+    font-size: .68rem;
+    color: rgba(184,230,164,.9);
+    line-height: 1.4;
+  }
+
+  .dest-hl::before {
+    content: '→';
+    flex-shrink: 0;
+    margin-top: .05rem;
+  }
+
+  .water-table-wrap {
+    margin-top: 1rem;
+    overflow-x: auto;
+  }
+
+  .water-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: .68rem;
+  }
+
+  .water-table th {
+    background: rgba(0,0,0,.3);
+    color: var(--gold);
+    padding: .5rem .75rem;
+    text-align: left;
+    letter-spacing: .08em;
+  }
+
+  .water-table td {
+    padding: .45rem .75rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    color: rgba(251,245,230,.8);
+  }
+
+  .water-table td.good { color: var(--mint); font-weight: 600; }
+
+  /* ── PANEL 5: GAMIFICATION ────────────────────────── */
+  #gamify {
+    background: var(--sand);
+  }
+
+  #gamify .panel-label { color: var(--canopy); }
+  #gamify .panel-heading { color: var(--forest); }
+
+  .challenge-box {
+    background: var(--forest);
+    border-radius: 20px;
+    padding: 2.5rem;
+    color: var(--sand);
+    max-width: 680px;
+    margin: 2rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .challenge-box::before {
+    content: '';
+    position: absolute;
+    top: -50px; right: -50px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,255,136,.12) 0%, transparent 70%);
+  }
+
+  .challenge-box .cb-tag {
+    font-family: var(--mono);
+    font-size: .6rem;
+    color: var(--glow);
+    letter-spacing: .25em;
+    margin-bottom: .75rem;
+    display: block;
+  }
+
+  .challenge-box h3 {
+    font-family: var(--display);
+    font-size: 2.2rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .challenge-box p {
+    font-size: .9rem;
+    line-height: 1.7;
+    color: rgba(251,245,230,.8);
+    max-width: 50ch;
+  }
+
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin: 2rem 0;
+  }
+
+  .game-card {
+    background: #fff;
+    border: 2px solid var(--ochre);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: transform .2s;
+  }
+
+  .game-card:hover { transform: translateY(-3px) rotate(.5deg); }
+
+  .game-card .gc-icon {
+    font-size: 2rem;
+    margin-bottom: .6rem;
+  }
+
+  .game-card h4 {
+    font-family: var(--sans);
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--forest);
+    margin-bottom: .35rem;
+  }
+
+  .game-card p {
+    font-size: .75rem;
+    color: var(--ash);
+    line-height: 1.5;
+  }
+
+  .app-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+    background: var(--forest);
+    color: var(--sand);
+    border-radius: 30px;
+    padding: .6rem 1.25rem;
+    font-family: var(--mono);
+    font-size: .75rem;
+    margin-top: 1rem;
+    letter-spacing: .05em;
+  }
+
+  .app-pill .ap-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--glow);
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  /* ── PANEL 6: SOCIAL ──────────────────────────────── */
+  #social {
+    background: var(--terra);
+    color: var(--parch);
+  }
+
+  #social .panel-label { color: rgba(251,245,230,.6); }
+  #social .panel-heading { color: #fff; }
+
+  .social-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  @media (max-width: 700px) {
+    .social-inner { grid-template-columns: 1fr; gap: 2rem; }
+  }
+
+  .hiking-club-card {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+
+  .hiking-club-card .hc-name {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  .hiking-club-card p {
+    font-size: .88rem;
+    line-height: 1.75;
+    color: rgba(251,245,230,.85);
+  }
+
+  .persona-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .persona-item {
+    background: rgba(255,255,255,.08);
+    border-radius: 14px;
+    padding: 1.1rem 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background .2s;
+  }
+
+  .persona-item:hover { background: rgba(255,255,255,.14); }
+
+  .persona-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+
+  .persona-text h4 {
+    font-family: var(--sans);
+    font-size: .85rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: .25rem;
+  }
+
+  .persona-text p {
+    font-size: .78rem;
+    color: rgba(251,245,230,.75);
+    line-height: 1.5;
+  }
+
+  .persona-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: .55rem;
+    background: rgba(255,255,255,.15);
+    color: var(--sand);
+    border-radius: 10px;
+    padding: 2px 8px;
+    letter-spacing: .1em;
+    margin-bottom: .25rem;
+  }
+
+  /* ── PANEL 7: DOS & DON'TS ────────────────────────── */
+  #rules {
+    background: var(--parch);
+  }
+
+  #rules .panel-label { color: var(--terra); }
+  #rules .panel-heading { color: var(--ink); }
+
+  .rules-table-wrap { overflow-x: auto; margin-top: 2rem; }
+
+  .rules-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 .75rem;
+    font-size: .88rem;
+  }
+
+  .rules-table th {
+    font-family: var(--mono);
+    font-size: .65rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    padding: .6rem 1.25rem;
+    color: var(--ash);
+    text-align: left;
+  }
+
+  .rules-table td {
+    padding: 1rem 1.25rem;
+    vertical-align: top;
+    line-height: 1.65;
+  }
+
+  .rules-table tr td:first-child {
+    border-radius: 12px 0 0 12px;
+    font-family: var(--mono);
+    font-size: .7rem;
+    letter-spacing: .12em;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .rules-table tr td:nth-child(2) {
+    font-family: var(--sans);
+    font-size: .85rem;
+  }
+
+  .rules-table tr td:nth-child(3) {
+    border-radius: 0 12px 12px 0;
+    font-family: var(--serif);
+    font-size: .82rem;
+    font-style: italic;
+    color: var(--ash);
+  }
+
+  .rules-table tr.include td:first-child { background: #DCFCE7; color: var(--canopy); }
+  .rules-table tr.include td:nth-child(2) { background: #DCFCE7; }
+  .rules-table tr.include td:nth-child(3) { background: #DCFCE7; }
+
+  .rules-table tr.avoid td:first-child { background: #FEE2E2; color: var(--glitch); }
+  .rules-table tr.avoid td:nth-child(2) { background: #FEE2E2; }
+  .rules-table tr.avoid td:nth-child(3) { background: #FEE2E2; }
+
+  /* ── BACK COVER ───────────────────────────────────── */
+  #backcover {
+    background: var(--forest);
+    color: var(--sand);
+    text-align: center;
+    padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #backcover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 110%, rgba(0,255,136,.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .back-eq {
+    font-family: var(--mono);
+    font-size: clamp(.8rem, 2vw, 1rem);
+    color: var(--gold);
+    letter-spacing: .1em;
+    margin-bottom: 2rem;
+    background: rgba(255,255,255,.05);
+    display: inline-block;
+    padding: .75rem 1.5rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.1);
+  }
+
+  .back-headline {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    background: linear-gradient(135deg, var(--mint), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .back-body {
+    max-width: 55ch;
+    margin: 0 auto 3rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(251,245,230,.75);
+  }
+
+  .back-cta-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .cta-btn {
+    font-family: var(--mono);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .15em;
+    padding: .85rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    transition: transform .2s, box-shadow .2s;
+  }
+
+  .cta-btn:hover { transform: translateY(-2px); }
+
+  .cta-primary {
+    background: var(--glow);
+    color: var(--forest);
+    box-shadow: 0 4px 20px rgba(0,255,136,.3);
+  }
+
+  .cta-secondary {
+    background: transparent;
+    color: var(--sand);
+    border: 1.5px solid rgba(251,245,230,.3);
+  }
+
+  .credits {
+    font-family: var(--mono);
+    font-size: .62rem;
+    color: rgba(251,245,230,.3);
+    letter-spacing: .15em;
+    margin-top: 3rem;
+    line-height: 2;
+  }
+
+  /* ── DIVIDERS ─────────────────────────────────────── */
+  .wave-divider {
+    height: 60px;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  .wave-divider svg { width: 100%; height: 100%; }
+
+  /* ── SUBTLE DECORATIONS ───────────────────────────── */
+  .leaf-deco {
+    position: absolute;
+    opacity: .06;
+    font-size: 12rem;
+    right: -1rem;
+    bottom: -2rem;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  .section-number {
+    font-family: var(--display);
+    font-size: 7rem;
+    opacity: .05;
+    position: absolute;
+    top: 1rem;
+    right: 2rem;
+    line-height: 1;
+    color: var(--ink);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── ENTRANCE ANIMATIONS ─────────────────────────── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .reveal-delay-1 { transition-delay: .1s; }
+  .reveal-delay-2 { transition-delay: .2s; }
+  .reveal-delay-3 { transition-delay: .3s; }
+  .reveal-delay-4 { transition-delay: .4s; }
+  .reveal-delay-5 { transition-delay: .5s; }
+
+  /* ── PRINT / MOBILE tweaks ───────────────────────── */
+  @media print {
+    #cover { break-after: page; }
+    .panel { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ COVER ═══════════════════════════════ -->
+<section id="cover">
+
+  <!-- LEFT: Title + tagline -->
+  <div class="cover-left reveal">
+    <div class="cover-eyebrow">IIT Delhi · Screen to Green Initiative</div>
+    <h1 class="cover-h1">
+      <span class="line-screen">Screen</span>
+      <span class="line-arrow">→</span>
+      <span class="line-green">Green</span>
+    </h1>
+    <p class="cover-tagline">
+      I'm not saying I'm better than a smartphone… but when was the last time a smartphone produced oxygen?
+      <br><br>
+      <em style="font-size:.85em; color:#4B5563;">The Unofficial, Highly Scientific Guide to Fixing Your Brain's Glitched Bio-Digital Equilibrium.</em>
+    </p>
+    <div class="cover-cta-strip">
+      <button class="cover-open-btn" onclick="document.getElementById('diagnosis').scrollIntoView({behavior:'smooth'})">Open Brochure ↓</button>
+      <span class="cover-open-note">Just kidding, it's a webpage.<br>You have to literally scroll down.</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: Phone mockup -->
+  <div class="cover-phone-wrap reveal reveal-delay-2">
+    <div class="cover-phone">
+      <div class="phone-notch"></div>
+
+      <div class="phone-status">
+        <span>IIT-D WiFi</span>
+        <span>█████ 100%</span>
+      </div>
+
+      <div class="phone-time">11:48</div>
+      <div class="phone-date">SATURDAY · YOUR LIFE IS PASSING BY</div>
+
+      <div class="screen-time-banner">
+        <div class="stb-top">
+          <span style="font-size:1rem;">📱</span>
+          <span class="stb-label">Screen Time · This Week</span>
+        </div>
+        <div class="stb-val">11h 23m</div>
+        <div class="stb-sub">↑ 38% above last week · per day average<br>You are in the top 92nd percentile. Unironic achievement.</div>
+      </div>
+
+      <div class="phone-notification">
+        <div class="pn-app">🌿 Screen to Green</div>
+        <div class="pn-text">Your prefrontal cortex has submitted a formal resignation letter. Please touch grass.</div>
+      </div>
+
+      <div class="phone-unlock">swipe up to unlock reality</div>
+      <div class="phone-swipe-bar"></div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">▼ &nbsp; scroll to begin your reboot &nbsp; ▼</div>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 1: DIAGNOSIS ═══════════════════════════════ -->
+<section id="diagnosis" class="panel">
+  <div class="section-number">01</div>
+  <span class="panel-label">Panel 01 — The Diagnosis</span>
+  <h2 class="panel-heading reveal">We see you.<br><em>Both of you.</em></h2>
+
+  <div class="two-col">
+    <div>
+      <p class="panel-body reveal reveal-delay-1">Before we get to the cure, let's be precise about the disease. The following flowchart is a clinically accurate, painfully relatable map of your average weekday.</p>
+
+      <div class="flowchart reveal reveal-delay-2">
+        <div class="fc-row"><div class="fc-box">🔔 Wake up</div><div class="fc-arrow">→</div><div class="fc-box bad">📱 Scroll Instagram immediately</div></div>
+        <div class="fc-connector"></div>
+        <div class="fc-row"><div class="fc-box bad">😰 Remember that deadline</div><div class="fc-arrow">→</div><div class="fc-box bad">🫠 Doomscroll to numb the panic</div></div>
+        <div class="fc-connector"></div>
+        <div class="fc-row"><div class="fc-box bad">🍕 Order food via app</div><div class="fc-arrow">→</div><div class="fc-box bad">🛋️ Bed-Loop intensifies</div></div>
+        <div class="fc-connector"></div>
+        <div class="fc-row"><div class="fc-box bad">😵 4:00 AM sleep latency: 148 min</div><div class="fc-arrow">→</div><div class="fc-box bad">🔄 Repeat tomorrow</div></div>
+      </div>
+
+      <div class="glitch-box reveal reveal-delay-3">
+        <p>The <strong>App-Close-Reopen Loop:</strong> You close Instagram. Two seconds later, your thumb opens Instagram again. You didn't decide to. Your prefrontal cortex was simply overruled by a billion-dollar dopamine feedback engine. You are not weak. You are hacked.</p>
+      </div>
+    </div>
+
+    <div>
+      <div class="stat-row reveal reveal-delay-2">
+        <div class="stat-card">
+          <div class="num">65%</div>
+          <div class="desc">OF IIT DELHI STUDENTS HAVE MODERATE-TO-HEAVY UNINTENTIONAL / UNWANTED SCREEN USE</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">86%</div>
+          <div class="desc">EXHIBIT SEVERELY DISRUPTED CIRCADIAN RHYTHMS</div>
+        </div>
+      </div>
+      <div class="stat-row reveal reveal-delay-3">
+        <div class="stat-card">
+          <div class="num">148<span style="font-size:1.2rem">min</span></div>
+          <div class="desc">AVERAGE SLEEP LATENCY FOR ARTIFICIALLY LIT HOSTEL OCCUPANTS</div>
+        </div>
+        <div class="stat-card">
+          <div class="num">90%</div>
+          <div class="desc">OF TIME SPENT INDOORS DESPITE A 320-ACRE GREEN CAMPUS</div>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;" class="reveal reveal-delay-4">
+        <p class="panel-body" style="font-size:.88rem; color: var(--ash);">These are not character flaws. They are outputs of a Technostress Feedback Loop — a perfectly engineered vicious cycle. The fix isn't willpower. It's systems design.</p>
+      </div>
+    </div>
+  </div>
+  <span class="leaf-deco">🍃</span>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 2: SCIENCE ═══════════════════════════════ -->
+<section id="science" class="panel">
+  <span class="panel-label">Panel 02 — The Science of the Glitch</span>
+  <h2 class="panel-heading reveal">Your brain isn't lazy.<br>It's running too many<br>background processes.</h2>
+
+  <div class="theory-cards reveal reveal-delay-1">
+    <div class="theory-card">
+      <span class="tc-tag">THEORY 01 · KAPLAN &amp; KAPLAN (1989–2024)</span>
+      <h3>Attention Restoration Theory</h3>
+      <p>Coding, studying, and digital navigation all consume <strong>Directed Attention</strong> — a top-down, metabolically expensive cognitive mode. After ~8 hours, your prefrontal cortex is depleted. Result: DAF (Directed Attention Fatigue). Nature environments uniquely engage <em>Involuntary Attention</em> — effortless soft fascination — allowing the directed system to fully reboot. 2024 ERP studies confirm this with measurable increases in N2 amplitude during nature exposure.</p>
+    </div>
+    <div class="theory-card">
+      <span class="tc-tag">THEORY 02 · ROGER ULRICH · EVOLUTIONARY BIOLOGY</span>
+      <h3>Stress Recovery Theory</h3>
+      <p>Your nervous system has a genetically hardwired positive-affective response to non-threatening natural environments. This triggers immediate reduction in heart rate, blood pressure, and cortisol secretion. In contrast, social media maintains your HPA axis in a state of perpetual low-grade arousal. Stepping into Sanjay Van isn't a luxury — it's a zero-cost, zero-side-effect pharmacological intervention against academic anxiety.</p>
+    </div>
+  </div>
+
+  <div class="bde-block reveal reveal-delay-2">
+    <div class="bde-formula">
+      <span class="highlight-green">Score</span> = (<span class="highlight-gold">Q · S<sub>prod</sub></span>) + (<span class="highlight-green">G · A · F</span>) − (<span class="highlight-red">D² · ω</span>) − (<span class="highlight-red">S<sub>total</sub> − 8</span>) · λ
+    </div>
+
+    <div class="bde-terms">
+      <div class="bde-term">
+        <div class="bdt-header">
+          <span class="bdt-num">①</span>
+          <span class="bdt-name">The "Earnings" Term</span>
+          <span class="bdt-expr highlight-gold">Q · S<sub>prod</sub></span>
+        </div>
+        <div class="bdt-body">
+          <div class="bdt-vars">
+            <div class="bdt-var"><span class="bdt-sym highlight-gold">S<sub>prod</sub></span><span>Productive Screen Time — hours on high-value tasks: coding, lectures, research. Screens as a tool, not a trap.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-gold">Q</span><span>Quality Coefficient — weighting factor (~10). Academic progress earns real points.</span></div>
+          </div>
+          <p class="bdt-rationale">We acknowledge that screen time is essential for an IIT student. This term rewards it — but only the intentional kind.</p>
+        </div>
+      </div>
+
+      <div class="bde-term">
+        <div class="bdt-header">
+          <span class="bdt-num">②</span>
+          <span class="bdt-name">The "Restoration Deposit"</span>
+          <span class="bdt-expr highlight-green">G · A · F</span>
+        </div>
+        <div class="bdt-body">
+          <div class="bdt-vars">
+            <div class="bdt-var"><span class="bdt-sym highlight-green">G</span><span>Green Time — raw minutes spent in nature.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-green">A</span><span>Activity Level: <strong>1.0</strong> passive (bench) · <strong>2.0</strong> active (walking, cycling). SRT: movement flushes cortisol faster than sitting still.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-green">F</span><span>Social Factor: <strong>1.0</strong> solo · <strong>1.5</strong> with friends. Social interaction acts as a "Psychological Buffer," preventing rumination loops.</span></div>
+          </div>
+          <p class="bdt-rationale">It's not just about how long you're outside — it's how you spend that time. A walk with a friend is worth 3× a doom-sit on a bench.</p>
+        </div>
+      </div>
+
+      <div class="bde-term">
+        <div class="bdt-header">
+          <span class="bdt-num">③</span>
+          <span class="bdt-name">The "Addiction Fine"</span>
+          <span class="bdt-expr highlight-red">D² · ω</span>
+        </div>
+        <div class="bdt-body">
+          <div class="bdt-vars">
+            <div class="bdt-var"><span class="bdt-sym highlight-red">D</span><span>Doomscrolling hours — infinite-scroll content with no cognitive return.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-red">ω</span><span>Weighting constant (~5). Combined with the square, this hits hard.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-red">D²</span><span>The critical part: addiction is <em>non-linear</em>. 1 hr of scrolling = minor drain. 4 hrs = total system crash. The square models the sunk-cost fallacy and dopamine depletion accurately.</span></div>
+          </div>
+          <p class="bdt-rationale">D=1: fine of 5. D=4: fine of 80. The maths is unambiguous.</p>
+        </div>
+      </div>
+
+      <div class="bde-term">
+        <div class="bdt-header">
+          <span class="bdt-num">④</span>
+          <span class="bdt-name">The "Overheating Penalty"</span>
+          <span class="bdt-expr highlight-red">(S<sub>total</sub> − 8) · λ</span>
+        </div>
+        <div class="bdt-body">
+          <div class="bdt-vars">
+            <div class="bdt-var"><span class="bdt-sym highlight-red">S<sub>total</sub></span><span>Total combined screen time for the day — productive or not.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-red">8</span><span>The Goldilocks Zone. The human brain has a "thermal limit" of ~8 hours of screen exposure before Directed Attention Fatigue (DAF) takes over.</span></div>
+            <div class="bdt-var"><span class="bdt-sym highlight-red">λ</span><span>Penalty rate (~15). After 8 hrs, every additional hour degrades sleep quality (Sleep Latency) and accelerates mental burnout — even if the hours were productive.</span></div>
+          </div>
+          <p class="bdt-rationale">Even a perfect scholar has a "thermal limit." This term ensures the model doesn't reward infinite productivity at the cost of cognitive collapse.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="science-copy reveal reveal-delay-3">
+    "A 120-minute weekly dose of high-biodiversity green space doesn't just 'make you feel nice.' It physically shrinks cortisol levels and reboots your prefrontal cortex. It's not a break. It's mandatory system maintenance."
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 3: DECOY EFFECT ═══════════════════════════════ -->
+<section id="decoy" class="panel">
+  <div class="section-number">03</div>
+  <span class="panel-label">Panel 03 — The Friday Evening Decision Tree</span>
+  <h2 class="panel-heading reveal">You have three options.<br>Choose wisely.</h2>
+  <p class="panel-body reveal reveal-delay-1" style="max-width:55ch; margin-bottom:0">It's 6 PM. Deadline survived. Brain offline. Here's a precise, evidence-based decision matrix for the next 4 hours of your life.</p>
+
+  <div class="option-cards">
+    <div class="opt-card decoy reveal reveal-delay-1">
+      <span class="opt-tag">Option A — The Decoy</span>
+      <h3>Ceiling Contemplation Mode</h3>
+      <p>Stare at the hostel ceiling for 3 hours. Ruminate on your CGPA, that embarrassing thing you said in 2019, and the assignment due Monday. Scientifically guaranteed sleep latency of <strong>148 minutes</strong>. Wake up more exhausted than you started.</p>
+    </div>
+
+    <div class="opt-card default reveal reveal-delay-2">
+      <span class="opt-tag">Option B — The Default (Current Pattern)</span>
+      <h3>The Doomscroll Marathon</h3>
+      <p>Accumulate 4 hours of passive reel consumption. Absorb 847 pieces of low-quality content. Experience profound cognitive debt, zero restoration, and a vicarious anxiety about other people's lives. Scientific sleep quality: <strong>critically suboptimal</strong>.</p>
+    </div>
+
+    <div class="opt-card solution reveal reveal-delay-3">
+      <div class="recommended-badge">✓ SYSTEM RECOMMENDED</div>
+      <span class="opt-tag">Option C — The Upgrade</span>
+      <h3>The Sanjay Van Reboot</h3>
+      <p>30-minute walk to the Machan watchtower. Engage Soft Fascination™. View an 11th-century fort. Let 1500-million-year-old Aravalli geology contextualize your deadline anxiety. Return functionally superior. Sleep latency: <strong>~12 minutes</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 4: DESTINATIONS ═══════════════════════════════ -->
+<section id="destinations" class="panel">
+  <span class="panel-label">Panel 04 — The Green Destination Index</span>
+  <h2 class="panel-heading reveal">Three restoration zones.<br>Zero excuses.</h2>
+  <p class="reveal reveal-delay-1" style="max-width:60ch; font-size:.95rem; color:rgba(251,245,230,.75); line-height:1.75;">Sorted by friction level. No vague "go outside" advice. Exact coordinates. Specific attractions. Your prefrontal cortex no longer needs to make any decisions.</p>
+
+  <div class="dest-grid">
+    <!-- Card 1 -->
+    <div class="dest-card reveal reveal-delay-1">
+      <div class="dest-level"><div class="level-dot"></div>LEVEL 1 · LOW FRICTION</div>
+      <h3>IIT Delhi Campus Itself</h3>
+      <span class="dest-tagline">0 km from your hostel room. Literally outside the door.</span>
+      <p>320 acres of urban green lung. Bio-Tech Lawns. Empty SAC gardens. The Aravalli ridge running through the campus. You walk past it every day without looking up.</p>
+      <div class="dest-highlights">
+        <div class="dest-hl">Count the different flower species between LHC and hostel</div>
+        <div class="dest-hl">Biotech Lawn: empirically validated outdoor reading zone</div>
+        <div class="dest-hl">Switch the e-rickshaw to your own legs. Just once.</div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="dest-card reveal reveal-delay-2">
+      <div class="dest-level"><div class="level-dot"></div>LEVEL 2 · MEDIUM FRICTION</div>
+      <h3>Hauz Khas Deer Park</h3>
+      <span class="dest-tagline">149 acres · 13th-century ruins · Actual deer</span>
+      <p>The lungs of South Delhi. Manicured, culturally integrated, and historically magnificent. Ideal for first-time outdoor adventurers (Bedroom Ghosts welcome).</p>
+      <div class="dest-highlights">
+        <div class="dest-hl">38 spotted deer remaining before Rajasthan relocation — limited time</div>
+        <div class="dest-hl">Munda Gumbad: Alauddin Khilji's rubble pavilion, 1295 AD</div>
+        <div class="dest-hl">Hauz Khas Lake: blue space linked to lower emotional exhaustion</div>
+        <div class="dest-hl">National Rosarium: 60+ rose varieties, peak bloom Dec–Jan</div>
+      </div>
+    </div>
+
+    <!-- Card 3 split into Sanjay Van + Neela Hauz -->
+    <div style="display:flex; flex-direction:column; gap:1.5rem;">
+      <div class="dest-card reveal reveal-delay-3">
+        <div class="dest-level"><div class="level-dot"></div>LEVEL 3 · HIGH REWARD</div>
+        <h3>Sanjay Van</h3>
+        <span class="dest-tagline">784 acres · 1500 million years old · Adjacent to campus</span>
+        <p>Highest ART "Extent" score of any location within 5 km. Walk among the ruins of Lal Kot — Delhi's first city. Climb the 21-ft Tejendra Machan. Spot the Asian Paradise Flycatcher (returned after 35-year absence).</p>
+        <div class="dest-highlights">
+          <div class="dest-hl">Anangtal Baoli: 11th-century stepwell, recently excavated by ASI</div>
+          <div class="dest-hl">Golden Jackals, Nilgai, Eurasian Sparrowhawk</div>
+          <div class="dest-hl">3 km of medieval red stone walls from 1060 AD</div>
+        </div>
+      </div>
+
+      <div class="dest-card reveal reveal-delay-4">
+        <div class="dest-level"><div class="level-dot"></div>LEVEL 3 · BONUS ROUND</div>
+        <h3>Neela Hauz<br>Biodiversity Park</h3>
+        <span class="dest-tagline">Aruna Asaf Ali Marg · Zero-energy engineering in the wild</span>
+        <p>A degraded sewage dump transformed into a functioning wetland. Treats 1,000,000 litres of wastewater daily using zero external energy. BOD: 40 → 4 mg/L. Pure biology.</p>
+        <div class="water-table-wrap">
+          <table class="water-table">
+            <thead><tr><th>Parameter</th><th>INLET</th><th>OUTLET</th></tr></thead>
+            <tbody>
+              <tr><td>pH</td><td>7.8</td><td class="good">6.78</td></tr>
+              <tr><td>BOD (mg/L)</td><td>40</td><td class="good">4</td></tr>
+              <tr><td>Dissolved O₂</td><td>0</td><td class="good">3.4</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 5: GAMIFICATION ═══════════════════════════════ -->
+<section id="gamify" class="panel">
+  <div class="section-number">05</div>
+  <span class="panel-label">Panel 05 — The 6–7 Protocol</span>
+  <h2 class="panel-heading reveal">Gamify your<br>neural reboot.</h2>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:3rem; align-items:start;">
+    <div>
+      <div class="challenge-box reveal reveal-delay-1">
+        <span class="cb-tag">⏱ THE CHALLENGE · ISSUED TO ALL USERS</span>
+        <h3>The 6–7 Protocol</h3>
+        <p>Enable an app blocker. Leave the hostel. Walk anywhere on or near campus for 67 minutes — because 6 and 7 are funny numbers and this brochure needed a hook. The actual science suggests somewhere around 50–60 minutes for meaningful cortisol reduction, but the research varies and nobody agrees, so just go outside for roughly an hour. Return. Notice that you feel like a functional human being.</p>
+        <div class="app-pill">
+          <div class="ap-dot"></div>
+          Recommended: Seek by iNaturalist · Turn your walk into a biodiversity audit
+        </div>
+      </div>
+
+      <div style="margin-top:2rem;" class="reveal reveal-delay-2">
+        <p class="panel-body" style="font-size:.88rem; color:var(--ash);">The Seek app uses computer vision to identify plants, birds, insects, and fungi in real time. Your walk becomes a live field study. Your campus becomes a 320-acre Pokémon GO, but for organisms that produce oxygen.</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="panel-body reveal reveal-delay-1" style="font-size:.88rem; color:var(--ash); margin-bottom:1.5rem;">Not ready for silent contemplation? Here are four structured outdoor engagements requiring zero prior skill.</p>
+
+      <div class="games-grid">
+        <div class="game-card reveal reveal-delay-2">
+          <div class="gc-icon">🌿</div>
+          <h4>Texture Hunt</h4>
+          <p>Find 10 distinct textures in the natural environment in under 15 min. Bark, moss, stone, soil, petal.</p>
+        </div>
+        <div class="game-card reveal reveal-delay-3">
+          <div class="gc-icon">⛅</div>
+          <h4>Cloud Watching</h4>
+          <p>Lie on the Bio-Tech Lawn. Do nothing. Your default mode network will thank you with improved memory consolidation.</p>
+        </div>
+        <div class="game-card reveal reveal-delay-4">
+          <div class="gc-icon">🌲</div>
+          <h4>Nature Bowling</h4>
+          <p>Collect fallen pinecones. Stack them. Knock them over with another pinecone. Adults: this is permitted.</p>
+        </div>
+        <div class="game-card reveal reveal-delay-5">
+          <div class="gc-icon">🔭</div>
+          <h4>Canopy Audit</h4>
+          <p>Walk from your hostel to Sanjay Van. Count distinct tree species. Challenge a friend. First to 20 wins.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 6: SOCIAL ═══════════════════════════════ -->
+<section id="social" class="panel">
+  <span class="panel-label">Panel 06 — Solving the Cold Start Problem</span>
+  <h2 class="panel-heading reveal">Don't want to wander<br>aimlessly alone?<br>Good news.</h2>
+
+  <div class="social-inner">
+    <div class="hiking-club-card reveal reveal-delay-1">
+      <div class="hc-name">IIT Delhi<br>Hiking Club</div>
+      <p>You don't need to plan anything. You don't need to know where you're going. You don't need to pretend you're comfortable with silence. The Hiking Club eliminates every logistical friction point. They plan. You show up. Sanjay Van awaits — most Saturday mornings, early sunrise slot.</p>
+      <br>
+      <p><strong>Regular expeditions include:</strong> dawn walks into Sanjay Van, Hauz Khas lake circuits, seasonal birdwatching mornings, Neela Hauz wetland tours. All skill levels. Social proof: provided.</p>
+      <div style="margin-top:1.25rem; display:flex; align-items:center; gap:.75rem; background:rgba(255,255,255,.08); border-radius:12px; padding:.75rem 1rem;">
+        <span style="font-size:1.3rem;">📸</span>
+        <div>
+          <div style="font-family:var(--mono); font-size:.58rem; color:rgba(251,245,230,.5); letter-spacing:.15em; margin-bottom:.15rem;">INSTAGRAM</div>
+          <a href="https://instagram.com/hikingclub.iitd" target="_blank" style="font-family:var(--mono); font-size:.85rem; color:#fff; font-weight:600; text-decoration:none; letter-spacing:.04em;">@hikingclub.iitd</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="persona-strip reveal reveal-delay-2">
+      <p style="font-size:.82rem; color:rgba(251,245,230,.65); margin-bottom:.75rem; font-family:var(--mono); letter-spacing:.08em;">WHO DOES THIS SOLVE FOR?</p>
+
+      <div class="persona-item">
+        <div class="persona-icon">👻</div>
+        <div class="persona-text">
+          <div class="persona-badge">~20% of campus · PG / UG4</div>
+          <h4>The Bedroom Ghost</h4>
+          <p>Hostel room as primary habitat. Social anxiety around solo outdoor time. Hiking Club provides the social scaffolding to exist outside without awkwardness.</p>
+        </div>
+      </div>
+
+      <div class="persona-item">
+        <div class="persona-icon">📚</div>
+        <div class="persona-text">
+          <div class="persona-badge">~38% of campus · UG1 / UG2</div>
+          <h4>The Class Commuter</h4>
+          <p>Exits hostel exclusively for class. Returns immediately. Habits not yet hardened. One structured group walk is enough to rewire the loop — permanently.</p>
+        </div>
+      </div>
+
+      <div class="persona-item">
+        <div class="persona-icon">⚡</div>
+        <div class="persona-text">
+          <div class="persona-badge">~13% of campus · UG3</div>
+          <h4>The Active Scroller</h4>
+          <p>Plays sport but doomscrolls the moment they return indoors. Gamified detox challenges and competitive nature audits bridge the split self.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PANEL 7: RULES ═══════════════════════════════ -->
+<section id="rules" class="panel">
+  <div class="section-number">07</div>
+  <span class="panel-label">Panel 07 — Operational Parameters</span>
+  <h2 class="panel-heading reveal">What this is.<br>What this isn't.</h2>
+
+  <div class="rules-table-wrap reveal reveal-delay-1">
+    <table class="rules-table">
+      <thead>
+        <tr>
+          <th>DIRECTIVE</th>
+          <th>SPECIFIC ELEMENT</th>
+          <th>RATIONALE</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="include">
+          <td>✓ INCLUDE</td>
+          <td>Hyper-specific coordinates — Anangtal Baoli, Tejendra Machan, exact deer enclosure location</td>
+          <td>"Go outside" causes decision fatigue. Specific destinations lower cognitive barrier to entry (Fogg Ability factor).</td>
+        </tr>
+        <tr class="include">
+          <td>✓ INCLUDE</td>
+          <td>Neurobiological terminology: Directed Attention Fatigue, N2 amplitude, cortisol reduction, HPA axis modulation</td>
+          <td>Engineering students respect hard data. This shifts "leisure" into "biological optimization." Authority bias activated.</td>
+        </tr>
+        <tr class="include">
+          <td>✓ INCLUDE</td>
+          <td>Self-deprecating humor: the App-Close-Reopen Loop, 4 AM doomscrolling, Bed-Loop flowchart</td>
+          <td>Humor bypasses defensive cognitive structures. Acknowledging exact flaws builds trust before delivering the scientific payload.</td>
+        </tr>
+        <tr class="avoid">
+          <td>✗ AVOID</td>
+          <td>Guilt-inducing climate metrics — CO₂ charts, 1.6kg carbon comparisons, ecological shaming</td>
+          <td>Guilt triggers the amygdala, inducing stress. Students already suffering Technostress will defensively discard the artifact.</td>
+        </tr>
+        <tr class="avoid">
+          <td>✗ AVOID</td>
+          <td>Phone-shaming / Luddite preachiness — "Technology is ruining your life," "Back in my day we played outside"</td>
+          <td>Screens are essential for academic survival at IIT Delhi. The goal is Bio-Digital Equilibrium — not abolition. Alienation kills persuasion.</td>
+        </tr>
+        <tr class="avoid">
+          <td>✗ AVOID</td>
+          <td>Dense academic jargon, paragraph-length citations, minute explanations of ART methodology</td>
+          <td>Cognitive load reduction: the Reduction principle demands minimal reading effort. Punchy synthesis only.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ BACK COVER ═══════════════════════════════ -->
+<section id="backcover">
+  <div class="back-eq reveal">W = ∫₀ᵀ [G(t) · α · σ] dt − Σ η · e^(Sᵢ − h)</div>
+  <h2 class="back-headline reveal reveal-delay-1">Reclaim<br>your cortex.</h2>
+  <p class="back-body reveal reveal-delay-2">The 320-acre campus you ignore every day contains 1500-million-year-old geology, medieval ruins, migratory birds, and a constructed wetland that outperforms modern water treatment facilities. It also happens to be the most effective antidepressant available to you — free, zero side-effects, and already inside the campus boundary.</p>
+
+  <div class="back-cta-row reveal reveal-delay-3">
+    <button class="cta-btn cta-primary" onclick="alert('Step 1: Close this tab.\nStep 2: Put on shoes.\nStep 3: Go outside.\nStep 4: Somewhere around an hour.\nStep 5: You will feel better.')">→ Run the 6–7 Protocol</button>
+    <button class="cta-btn cta-secondary" onclick="window.open('https://instagram.com/hikingclub.iitd','_blank')">→ @hikingclub.iitd</button>
+  </div>
+
+  <div class="credits reveal reveal-delay-4">
+    SOURCES: Delhi Development Authority · CEMDE · NIH PubMed Meta-Analyses 2023–2025 · Kaplan &amp; Kaplan ART · Roger Ulrich SRT · B.J. Fogg Behavior Model<br>
+    BROCHURE FRAMEWORK · "SCREEN TO GREEN" INITIATIVE · IIT DELHI · A STRATEGIC DESIGN FOR BIO-DIGITAL EQUILIBRIUM<br>
+    Note: This brochure contains zero guilt-trips, zero carbon metrics, and zero preachy lectures about screen time.<br>It does contain one very strong argument that trees are more useful than your FYP.
+  </div>
+</section>
+
+<script>
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(el => obs.observe(el));
+
+  // Cover phone time update
+  function updateTime() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const el = document.querySelector('.phone-time');
+    if (el) el.textContent = `${h}:${m}`;
+  }
+  updateTime();
+  setInterval(updateTime, 30000);
+</script>
+</body>
+</html>
