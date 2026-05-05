@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BDE Framework | Screen-to-Green</title>
+    <style>
+        /* CSS Variables & Reset */
+        :root {
+            --color-background-primary: #ffffff;
+            --color-background-secondary: #f9f9f9;
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #666666;
+            --color-text-tertiary: #999999;
+            --color-border-tertiary: #eeeeee;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-background-primary: #121212;
+                --color-background-secondary: #1e1e1e;
+                --color-text-primary: #e0e0e0;
+                --color-text-secondary: #aaaaaa;
+                --color-border-tertiary: #333333;
+            }
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--color-background-secondary);
+            color: var(--color-text-primary);
+            display: flex;
+            justify-content: center;
+        }
+
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
+        /* Your BDE Styles */
+        .bde-wrap { font-family: var(--font-sans); padding: 2rem 1rem; max-width: 900px; width: 100%; }
+        .section-label { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-tertiary); margin-bottom: 0.5rem; }
+        .chart-title { font-size: 18px; font-weight: 600; color: var(--color-text-primary); margin-bottom: 0.25rem; }
+        .chart-sub { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 1.5rem; line-height: 1.4; }
+        .chart-card { background: var(--color-background-primary); border: 1px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .controls-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 1.5rem; align-items: center; }
+        .ctrl { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--color-text-secondary); }
+        .ctrl input[type=range] { width: 120px; cursor: pointer; }
+        .ctrl span { font-weight: 600; color: var(--color-text-primary); font-size: 14px; }
+        .legend { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 1rem; font-size: 12px; color: var(--color-text-secondary); }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+        .score-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 1rem; }
+        .score-card { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 1rem; border: 1px solid var(--color-border-tertiary); }
+        .score-card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--color-text-secondary); margin-bottom: 4px; }
+        .score-card .value { font-size: 24px; font-weight: 700; color: var(--color-text-primary); }
+        .score-card.positive .value { color: #3B6D11; }
+        .score-card.negative .value { color: #A32D2D; }
+        #sc-total-card.positive { background: rgba(59, 109, 17, 0.1); border-color: #3B6D11; }
+        #sc-total-card.negative { background: rgba(163, 45, 45, 0.1); border-color: #A32D2D; }
+    </style>
+</head>
+<body>
+
+<div class="bde-wrap">
+    <h2 class="sr-only">BDE Framework: Interactive visualization of the Bio-Digital Equilibrium formula</h2>
+
+    <!-- Formula 1 -->
+    <div class="chart-card">
+        <div class="section-label">Formula 1 — The Calculus Model</div>
+        <div class="chart-title">Restoration function Ψ(G)</div>
+        <div class="chart-sub">Mental battery recovery vs. weekly nature minutes.</div>
+        <div class="controls-row">
+            <div class="ctrl">Capacity (L) <input type="range" id="L" min="50" max="200" value="100"> <span id="L-val">100</span></div>
+            <div class="ctrl">Steepness (k) <input type="range" id="k" min="1" max="10" value="4"> <span id="k-val">0.04</span></div>
+            <div class="ctrl">Activity (A) <input type="range" id="A" min="10" max="20" value="15"> <span id="A-val">1.5</span></div>
+            <div class="ctrl">Social (F) <input type="range" id="F" min="10" max="15" value="12"> <span id="F-val">1.2</span></div>
+            <div class="ctrl">Phone? <input type="range" id="Sact" min="0" max="10" value="0" step="10"> <span id="Sact-val">No</span></div>
+        </div>
+        <div class="legend">
+            <div class="legend-item"><div class="legend-dot" style="background:#3B6D11;"></div>Phone off</div>
+            <div class="legend-item"><div class="legend-dot" style="background:#BA7517; border: 1px dashed #BA7517;"></div>With phone</div>
+        </div>
+        <div style="position:relative; width:100%; height:300px;"><canvas id="sigmoidChart"></canvas></div>
+    </div>
+
+    <!-- DAF Penalty -->
+    <div class="chart-card">
+        <div class="section-label">Formula 1 — DAF Penalty Ω</div>
+        <div class="chart-title">Cognitive Drain</div>
+        <div class="chart-sub">Exponential fatigue after the 8h burnout horizon.</div>
+        <div style="position:relative; width:100%; height:250px;"><canvas id="dafChart"></canvas></div>
+    </div>
+
+    <!-- Scorecard -->
+    <div class="chart-card">
+        <div class="section-label">Formula 2 — The Operational Scorecard</div>
+        <div class="chart-title">Live Wellbeing Calculator</div>
+        <div class="controls-row">
+            <div class="ctrl">Study hrs <input type="range" id="sp" min="0" max="14" value="8"> <span id="sp-val">8</span></div>
+            <div class="ctrl">Nature mins <input type="range" id="gm" min="0" max="120" value="30" step="5"> <span id="gm-val">30</span></div>
+            <div class="ctrl">Scroll hrs <input type="range" id="dsc" min="0" max="6" value="2"> <span id="dsc-val">2</span></div>
+        </div>
+        <div class="score-cards">
+            <div class="score-card positive"><div class="label">Earnings</div><div class="value" id="sc-earn">80</div></div>
+            <div class="score-card positive"><div class="label">Nature</div><div class="value" id="sc-dep">30</div></div>
+            <div class="score-card negative"><div class="label">Fine</div><div class="value" id="sc-fine">−20</div></div>
+            <div class="score-card" id="sc-total-card"><div class="label">Total</div><div class="value" id="sc-total">90</div></div>
+        </div>
+        <div style="position:relative; width:100%; height:280px; margin-top:2rem;"><canvas id="scorecardChart"></canvas></div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+    /* All the JS logic from your previous snippet goes here */
+    // Ensure you keep your updateScorecard and Chart initialization code exactly as you had it!
+</script>
+
+</body>
+</html>
